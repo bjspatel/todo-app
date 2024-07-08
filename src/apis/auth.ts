@@ -1,29 +1,32 @@
-import axios from "./axios";
+import axiosInstance from "./axios";
 import {
   LoginRequestDto,
-  LoginResponseDto,
   RegisterRequestDto,
+  TokenDto,
   UserDto,
 } from "./types";
 
-export const login = async (requestDto: LoginRequestDto): Promise<string> => {
+const login = async (requestDto: LoginRequestDto): Promise<string> => {
   try {
-    const { data } = await axios.post("/auth/login", requestDto);
-    const { token } = data as LoginResponseDto;
+    const { data } = await axiosInstance.post("/auth/login", requestDto);
+    const { token } = data as TokenDto;
     return token;
   } catch (error) {
     throw new Error("Unauthorized");
   }
 };
 
-export const register = async (
-  requestDto: RegisterRequestDto
-): Promise<UserDto> => {
+const register = async (requestDto: RegisterRequestDto): Promise<UserDto> => {
   try {
-    const { data } = await axios.post("/auth/register", requestDto);
+    const { data } = await axiosInstance.post("/auth/register", requestDto);
     const user = data as UserDto;
     return user;
   } catch (error) {
     throw new Error("Bad Request");
   }
+};
+
+export const auth = {
+  login,
+  register,
 };
