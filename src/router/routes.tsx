@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { Home, Login, NotFound, Register } from "../pages";
-import PrivateRoute from "./private-route";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
