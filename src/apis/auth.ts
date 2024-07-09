@@ -11,6 +11,22 @@ const login = async (requestDto: LoginRequestDto): Promise<string> => {
   }
 };
 
+const logout = async (): Promise<void> => {
+  await axiosInstance.post("/auth/logout");
+};
+
+const refreshAccessToken = async (): Promise<string> => {
+  try {
+    const { data } = await axiosInstance.get("/auth/refresh-token");
+    const { token } = data as TokenDto;
+    return token;
+  } catch (error) {
+    throw new Error("Unauthorized");
+  }
+};
+
 export const auth = {
   login,
+  logout,
+  refreshAccessToken,
 };

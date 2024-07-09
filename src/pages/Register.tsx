@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { api } from "../apis";
 import { RegisterRequestDto } from "../apis/types";
+import { Avatar, AvatarImage } from "../components/ui/avatar";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -32,9 +33,15 @@ export const Register = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="mx-auto max-w-sm">
-        <CardHeader>
-          <CardTitle className="text-xl text-center">Register</CardTitle>
-        </CardHeader>
+        <CardHeader className="gap-4 m-6">
+          <Avatar className="self-center w-24 h-24">
+            <AvatarImage
+              src="/logo.svg"
+              alt="avatar"
+            />
+          </Avatar>{" "}
+          <CardTitle className="text-2xl text-center">ToDo Ease</CardTitle>
+        </CardHeader>{" "}
         <CardContent>
           <div className="grid gap-4">
             <div className="grid grid-cols-2 gap-4">
@@ -95,7 +102,7 @@ export const Register = () => {
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Already have an account?
+            Already have an account?{" "}
             <Link
               to="/login"
               className="underline"
