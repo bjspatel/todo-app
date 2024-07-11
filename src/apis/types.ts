@@ -18,5 +18,5 @@ export type UserDto = {
 
 export type TokenDto = {
   userId: string;
-  token: string;
+  accessToken: string;
 };

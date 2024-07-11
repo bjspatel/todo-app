@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { AuthLoader } from "./auth/AuthLoader";
+import AuthProvider from "./contexts/AuthProvider";
 import { router } from "./router/routes";
 
 const queryClient = new QueryClient();
@@ -13,11 +13,11 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <React.StrictMode>
-      <AuthLoader>
+      <AuthProvider>
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
         </QueryClientProvider>
-      </AuthLoader>
+      </AuthProvider>
     </React.StrictMode>
   );
 }

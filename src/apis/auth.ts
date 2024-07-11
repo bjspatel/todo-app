@@ -1,11 +1,10 @@
 import axiosInstance from "./axios";
 import { LoginRequestDto, TokenDto } from "./types";
 
-const login = async (requestDto: LoginRequestDto): Promise<string> => {
+const login = async (requestDto: LoginRequestDto): Promise<TokenDto> => {
   try {
     const { data } = await axiosInstance.post("/auth/login", requestDto);
-    const { token } = data as TokenDto;
-    return token;
+    return data as TokenDto;
   } catch (error) {
     throw new Error("Unauthorized");
   }
@@ -15,11 +14,10 @@ const logout = async (): Promise<void> => {
   await axiosInstance.post("/auth/logout");
 };
 
-const refreshAccessToken = async (): Promise<string> => {
+const refreshAccessToken = async (): Promise<TokenDto> => {
   try {
     const { data } = await axiosInstance.get("/auth/refresh-token");
-    const { token } = data as TokenDto;
-    return token;
+    return data as TokenDto;
   } catch (error) {
     throw new Error("Unauthorized");
   }
