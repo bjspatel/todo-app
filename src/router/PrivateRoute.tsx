@@ -1,10 +1,10 @@
-import { useContext, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
 
-import AuthContext from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const PrivateRoute = ({ children }: PropsWithChildren) => {
-  const authContext = useContext(AuthContext);
+  const authContext = useAuth();
   return authContext.isAuthenticated ? children : <Navigate to="/login" />;
 };
 

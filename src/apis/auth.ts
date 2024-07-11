@@ -3,9 +3,11 @@ import { LoginRequestDto, TokenDto } from "./types";
 
 const login = async (requestDto: LoginRequestDto): Promise<TokenDto> => {
   try {
+    console.log("Request dto: ", requestDto);
     const { data } = await axiosInstance.post("/auth/login", requestDto);
     return data as TokenDto;
   } catch (error) {
+    console.log("Acios err: ", error);
     throw new Error("Unauthorized");
   }
 };

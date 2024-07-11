@@ -1,9 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { AvatarImage } from "@radix-ui/react-avatar";
 
-import AuthContext from "../contexts/AuthContext";
 import { Avatar } from "../components/ui/avatar";
 import { Button } from "../components/ui/button";
 import {
@@ -15,9 +14,10 @@ import {
 } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Login = () => {
-  const authContext = useContext(AuthContext);
+  const authContext = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -57,13 +57,14 @@ export const Login = () => {
             className="w-full"
             onClick={async () => {
               try {
+                console.log("Email/password: ", email, password);
                 await authContext.login({
                   email,
                   password,
                 });
                 navigate("/");
               } catch (error) {
-                alert("Unauthorized");
+                console.log("Error: ", error);
               }
             }}
           >

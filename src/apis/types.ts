@@ -16,6 +16,12 @@ export type UserDto = {
   avatar?: string;
 };
 
+export type TaskDto = {
+  id: string;
+  name: string;
+  userId: string;
+};
+
 export type TokenDto = {
   userId: string;
   accessToken: string;
