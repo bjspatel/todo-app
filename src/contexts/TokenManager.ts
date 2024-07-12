@@ -1,3 +1,4 @@
+// singleton to manage the access token
 let accessToken = "";
 
 export const TokenManager = {

@@ -1,22 +1,27 @@
+import { api } from "@/apis";
 import { useQuery } from "@tanstack/react-query";
 
-import { api } from "../../apis";
-import { useAuth } from "../../contexts/AuthContext";
+import NewTask from "./NewTask";
+import Task from "./Task";
 
 const TaskList = () => {
-  const { userId } = useAuth();
   const { data: taskDtos, isLoading } = useQuery({
-    queryKey: ["tasks", userId],
+    queryKey: ["tasks"],
     queryFn: api.task.list,
   });
   const tasks = taskDtos?.map(taskDto => (
-    <div key={taskDto.id}>{taskDto.name}</div>
+    <Task
+      key={taskDto.id}
+      dto={taskDto}
+    />
   ));
-  const newTask = <div key="new">New Task</div>;
+  const newTask = <NewTask key="new" />;
   return isLoading ? (
     <div>Loading...</div>
   ) : (
-    <div className="flex flex-col gap-2">{tasks?.concat(newTask)}</div>
+    <div className="flex flex-col gap-2 w-[480px] self-center">
+      {tasks?.concat(newTask)}
+    </div>
   );
 };
 

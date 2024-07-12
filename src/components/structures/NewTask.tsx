@@ -1,0 +1,65 @@
+import { CheckCircle2, PlusCircle, XCircle } from "lucide-react";
+import { useState } from "react";
+
+import { api } from "@/apis";
+import { CreateTaskRequestDto } from "@/apis/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { ProgressDropdown } from "./ProgressDropdown";
+import { StatusValue } from "./StatusDropdown";
+
+const NewTask = () => {
+  const [isNew, setIsNew] = useState(false);
+  const [name, setName] = useState("");
+  const [status] = useState<StatusValue>("to-do");
+
+  const queryclient = useQueryClient();
+  const { mutate: createTask } = useMutation({
+    mutationKey: ["createTask"],
+    mutationFn: () => {
+      const createTaskRequest: CreateTaskRequestDto = {
+        name: name,
+        status: status,
+      };
+      return api.task.create(createTaskRequest);
+    },
+  });
+
+  return !isNew ? (
+    <div className="w-full flex justify-center">
+      <PlusCircle onClick={() => setIsNew(true)} />
+    </div>
+  ) : (
+    <div className="flex flex-col gap-2">
+      <div className="w-full flex justify-between gap-2">
+        <input
+          onChange={e => setName(e.target.value)}
+          type="text"
+          placeholder="Task name"
+        />
+        <ProgressDropdown
+          selectedProgressValue="0"
+          setSelectedProgressValue={() => {}}
+        />
+      </div>
+      <div className="flex flex-row">
+        <button
+          onClick={async () => {
+            await createTask();
+            queryclient.invalidateQueries({
+              queryKey: ["tasks"],
+            });
+            setIsNew(false);
+          }}
+        >
+          <CheckCircle2 />
+        </button>
+        <button onClick={() => setIsNew(false)}>
+          <XCircle />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default NewTask;

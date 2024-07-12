@@ -1,20 +1,15 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+import { api } from "@/apis";
+import { Avatar, AvatarImage } from "@shadcn/avatar";
+import { Button } from "@shadcn/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@shadcn/card";
+import { Input } from "@shadcn/input";
+import { Label } from "@shadcn/label";
 import { useMutation } from "@tanstack/react-query";
 
-import { api } from "../apis";
 import { RegisterRequestDto } from "../apis/types";
-import { Avatar, AvatarImage } from "../components/ui/avatar";
-import { Button } from "../components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
 
 export const Register = () => {
   const [firstName, setFirstName] = useState("");
