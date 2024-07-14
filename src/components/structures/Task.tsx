@@ -1,12 +1,13 @@
-import { CheckCircle2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { api } from "@/apis";
 import { CreateTaskRequestDto, TaskDto } from "@/apis/types";
 import { useMutation } from "@tanstack/react-query";
 
-import { TaskProgress, ProgressValue } from "./TaskProgress";
+import TaskActions from "./TaskActions";
 import TaskDate from "./TaskDate";
+import TaskDone from "./TaskDone";
+import { ProgressValue, TaskProgress } from "./TaskProgress";
 
 type Props = {
   dto: TaskDto;
@@ -15,6 +16,7 @@ type Props = {
 const Task = (props: Props) => {
   const { dto } = props;
   const [taskName, setTaskName] = useState(dto.name);
+  const [isDone, setDone] = useState(false);
   const [selectedProgressValue, setSelectedProgressValue] =
     useState<ProgressValue>("0");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
@@ -62,22 +64,28 @@ const Task = (props: Props) => {
   };
 
   return (
-    <div className="flex flex-row gap-4 justify-between h-fit p-4 border-sky-700 border-2 rounded-md">
-      <div className="flex">
-        <CheckCircle2 className="self-center stroke-green-500" />
-      </div>
+    <div className="flex flex-row gap-4 justify-between h-fit p-4 ">
+      <TaskDone
+        isDone={isDone}
+        setDone={setDone}
+      />
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
           <input
             value={taskName}
             onChange={handleTaskNameChange}
           />
-          <TaskProgress
-            selectedProgressValue={selectedProgressValue}
-            setSelectedProgressValue={setSelectedProgressValue}
-          />
+          <div className="flex">
+            {!isDone && (
+              <TaskProgress
+                selectedProgressValue={selectedProgressValue}
+                setSelectedProgressValue={setSelectedProgressValue}
+              />
+            )}
+            <TaskActions taskId={dto.id} />
+          </div>
         </div>
-        <div className="text-sm">
+        <div className="flex justify-between text-sm">
           <TaskDate
             date={selectedDate}
             setDate={setSelectedDate}

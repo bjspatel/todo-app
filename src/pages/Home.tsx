@@ -8,7 +8,7 @@ export const Home = () => {
   const authContext = useAuth();
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col justify-center align-center gap-4 w-full">
+    <div className="flex flex-col justify-center align-center gap-4 w-full h-full">
       <h1>Home</h1>
       <TaskList />
       <Button

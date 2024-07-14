@@ -23,7 +23,7 @@ const TaskDate = (props: Props) => {
         <Button
           variant={"outline"}
           className={cn(
-            "w-[160px] justify-start text-left font-normal",
+            "w-[148px] h-[24px] justify-start text-left font-normal p-2",
             !date && "text-muted-foreground"
           )}
         >

@@ -1,5 +1,6 @@
 "use client";
 
+import { CircleDashed } from "lucide-react";
 import {
   useMemo,
   useState,
@@ -10,7 +11,6 @@ import {
 } from "react";
 
 import ProgressHalfIcon from "@/assets/progress-half.svg?react";
-import ProgressNoneSrc from "@/assets/progress-none.svg?react";
 import ProgressQuarterSrc from "@/assets/progress-quarter.svg?react";
 import ProgressThreeQuarterSrc from "@/assets/progress-three-quarter.svg?react";
 import { cn } from "@/lib/utils";
@@ -28,7 +28,7 @@ type Progress = {
 const progressList: Progress[] = [
   {
     value: "0",
-    icon: ProgressNoneSrc,
+    icon: CircleDashed,
   },
   {
     value: "0.25",
@@ -53,8 +53,9 @@ export function TaskProgress(props: Props) {
   const { selectedProgressValue, setSelectedProgressValue } = props;
   const [open, setOpen] = useState(false);
   const selectedProgress = useMemo(() => {
-    return progressList.find(
-      progress => progress.value === selectedProgressValue
+    return (
+      progressList.find(progress => progress.value === selectedProgressValue) ||
+      progressList[0]
     );
   }, [selectedProgressValue]);
   console.log(
@@ -70,12 +71,10 @@ export function TaskProgress(props: Props) {
         <Button
           variant="link"
           size="sm"
-          className="w-[50px] justify-start self-center"
+          className="w-[50px] justify-start self-center h-4"
         >
-          {selectedProgress ? (
-            <selectedProgress.icon className="mr-2 h-4 w-4 fill-current" />
-          ) : (
-            <>Set progress</>
+          {selectedProgress && (
+            <selectedProgress.icon className="h-4 w-4 fill-current" />
           )}
         </Button>
       </PopoverTrigger>

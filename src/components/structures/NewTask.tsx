@@ -26,8 +26,12 @@ const NewTask = () => {
   });
 
   return !isNew ? (
-    <div className="w-full flex justify-center">
-      <PlusCircle onClick={() => setIsNew(true)} />
+    <div className="w-full flex justify-end p-4">
+      <PlusCircle
+        className="h-12 w-12 stroke-primary"
+        strokeWidth={1}
+        onClick={() => setIsNew(true)}
+      />
     </div>
   ) : (
     <div className="flex flex-col gap-2">
@@ -44,7 +48,7 @@ const NewTask = () => {
           setSelectedProgressValue={() => {}}
         />
       </div>
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 justify-end pr-4">
         <button
           onClick={async () => {
             await createTask();
