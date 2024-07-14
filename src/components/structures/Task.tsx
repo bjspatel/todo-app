@@ -5,7 +5,8 @@ import { api } from "@/apis";
 import { CreateTaskRequestDto, TaskDto } from "@/apis/types";
 import { useMutation } from "@tanstack/react-query";
 
-import { ProgressDropdown, ProgressValue } from "./ProgressDropdown";
+import { TaskProgress, ProgressValue } from "./TaskProgress";
+import TaskDate from "./TaskDate";
 
 type Props = {
   dto: TaskDto;
@@ -16,6 +17,10 @@ const Task = (props: Props) => {
   const [taskName, setTaskName] = useState(dto.name);
   const [selectedProgressValue, setSelectedProgressValue] =
     useState<ProgressValue>("0");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
+
   const [isTyping, setIsTyping] = useState(false);
   const { mutate: updateTask } = useMutation({
     mutationKey: ["updateTask"],
@@ -59,7 +64,7 @@ const Task = (props: Props) => {
   return (
     <div className="flex flex-row gap-4 justify-between h-fit p-4 border-sky-700 border-2 rounded-md">
       <div className="flex">
-        <CheckCircle2 className="self-center" />
+        <CheckCircle2 className="self-center stroke-green-500" />
       </div>
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
@@ -67,12 +72,17 @@ const Task = (props: Props) => {
             value={taskName}
             onChange={handleTaskNameChange}
           />
-          <ProgressDropdown
+          <TaskProgress
             selectedProgressValue={selectedProgressValue}
             setSelectedProgressValue={setSelectedProgressValue}
           />
         </div>
-        <div className="text-sm">Date</div>
+        <div className="text-sm">
+          <TaskDate
+            date={selectedDate}
+            setDate={setSelectedDate}
+          />
+        </div>
       </div>
     </div>
   );

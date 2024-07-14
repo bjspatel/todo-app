@@ -49,7 +49,7 @@ type Props = {
   setSelectedProgressValue: Dispatch<SetStateAction<ProgressValue>>;
 };
 
-export function ProgressDropdown(props: Props) {
+export function TaskProgress(props: Props) {
   const { selectedProgressValue, setSelectedProgressValue } = props;
   const [open, setOpen] = useState(false);
   const selectedProgress = useMemo(() => {
@@ -70,7 +70,7 @@ export function ProgressDropdown(props: Props) {
         <Button
           variant="link"
           size="sm"
-          className="w-[50px] justify-start"
+          className="w-[50px] justify-start self-center"
         >
           {selectedProgress ? (
             <selectedProgress.icon className="mr-2 h-4 w-4 fill-current" />
