@@ -1,10 +1,11 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@shadcn/popover";
-import { Calendar } from "@shadcn/calendar";
-import { Button } from "../ui/button";
-import { cn } from "@/lib";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useState, Dispatch, SetStateAction } from "react";
+
+import { Calendar } from "@shadcn/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@shadcn/popover";
+
+import { Button } from "../../ui/button";
 
 type Props = {
   date: Date | undefined;
@@ -21,11 +22,8 @@ const TaskDate = (props: Props) => {
     >
       <PopoverTrigger asChild>
         <Button
-          variant={"outline"}
-          className={cn(
-            "w-[148px] h-[24px] justify-start text-left font-normal p-2",
-            !date && "text-muted-foreground"
-          )}
+          variant="outline"
+          className="w-[148px] h-[24px] justify-end text-muted-foreground text-left font-normal p-2"
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? format(date, "PPP") : <span>Pick a date</span>}

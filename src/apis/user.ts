@@ -1,5 +1,5 @@
 import axiosInstance from "./axios";
-import { RegisterRequestDto, UserDto } from "./types";
+import { RegisterRequestDto, UpdateUserProfile, UserDto } from "./types";
 
 const register = async (requestDto: RegisterRequestDto): Promise<UserDto> => {
   try {
@@ -11,17 +11,19 @@ const register = async (requestDto: RegisterRequestDto): Promise<UserDto> => {
   }
 };
 
-const getMe = async (): Promise<UserDto> => {
+const updateMe = async (
+  requestDto: Partial<UpdateUserProfile>
+): Promise<UserDto> => {
   try {
-    const { data } = await axiosInstance.get("/users/me");
+    const { data } = await axiosInstance.put("/users/me", requestDto);
     const user = data as UserDto;
     return user;
   } catch (error) {
-    throw new Error("Unauthorized");
+    throw new Error("Bad Request");
   }
 };
 
 export const user = {
-  getMe,
+  updateMe,
   register,
 };

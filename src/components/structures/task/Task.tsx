@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { api } from "@/apis";
 import { CreateTaskRequestDto, TaskDto } from "@/apis/types";
@@ -58,7 +59,9 @@ const Task = (props: Props) => {
     };
   }, [taskName, isTyping, dto.name, updateTask]);
 
-  const handleTaskNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTaskNameChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setTaskName(event.target.value);
     setIsTyping(true);
   };
@@ -71,7 +74,10 @@ const Task = (props: Props) => {
       />
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
-          <input
+          <TextareaAutosize
+            rows={1}
+            maxRows={5}
+            className="w-[75%] resize-none bg-transparent"
             value={taskName}
             onChange={handleTaskNameChange}
           />
@@ -85,7 +91,7 @@ const Task = (props: Props) => {
             <TaskActions taskId={dto.id} />
           </div>
         </div>
-        <div className="flex justify-between text-sm">
+        <div className="flex justify-end text-sm">
           <TaskDate
             date={selectedDate}
             setDate={setSelectedDate}

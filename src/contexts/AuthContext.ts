@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
-import { LoginRequestDto } from "../apis/types";
+import { LoginRequestDto, UserDto } from "../apis/types";
 
 const AuthContext = createContext({
-  userId: "",
+  user: null as UserDto | null,
   isAuthenticated: false,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   login: async (_: LoginRequestDto): Promise<void> => {},

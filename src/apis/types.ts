@@ -3,8 +3,13 @@ export type LoginRequestDto = {
   password: string;
 };
 
-export type TokenDto = {
-  userId: string;
+export type UpdatePasswordRequestDto = {
+  currentPassword: string;
+  newPassword: string;
+};
+
+export type AuthDto = {
+  user: UserDto;
   accessToken: string;
 };
 
@@ -14,11 +19,18 @@ export type RegisterRequestDto = {
   password: string;
 };
 
+export type UpdateUserProfile = {
+  name: string;
+  email: string;
+  about: string;
+};
+
 export type UserDto = {
   id: string;
   email: string;
   name: string;
   avatar?: string;
+  about?: string;
 };
 
 export type TaskStatus = "to-do" | "in-progress" | "done" | "canceled";

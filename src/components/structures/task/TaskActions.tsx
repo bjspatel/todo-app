@@ -5,7 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../../ui/dropdown-menu";
 
 type Props = {
   taskId: string;
@@ -28,7 +28,10 @@ const TaskActions = (props: Props) => {
           align="end"
           className="w-[80px] min-w-4"
         >
-          <DropdownMenuItem>Delete</DropdownMenuItem>
+          <DropdownMenuItem>Archive</DropdownMenuItem>
+          <DropdownMenuItem className="text-orange-600">
+            Delete
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -58,10 +58,6 @@ export function TaskProgress(props: Props) {
       progressList[0]
     );
   }, [selectedProgressValue]);
-  console.log(
-    "Icons: ",
-    progressList.map(progress => progress.icon)
-  );
   return (
     <Popover
       open={open}

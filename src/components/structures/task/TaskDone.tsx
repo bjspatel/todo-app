@@ -11,7 +11,7 @@ const TaskDone = (props: Props) => {
   return (
     <div className="flex">
       <button
-        className="self-center"
+        className="self-start"
         onClick={() => setDone(isDone => !isDone)}
       >
         {isDone ? (
@@ -19,7 +19,7 @@ const TaskDone = (props: Props) => {
         ) : (
           <Circle
             strokeWidth={2}
-            className="h-6 w-6 stroke-slate-400"
+            className="h-6 w-6 stroke-muted-foreground"
           />
         )}
       </button>

@@ -1,9 +1,8 @@
 import { api } from "@/apis";
 import { useQuery } from "@tanstack/react-query";
 
-import NewTask from "./NewTask";
+import { Separator } from "../../ui/separator";
 import Task from "./Task";
-import { Separator } from "../ui/separator";
 
 const TaskList = () => {
   const { data: taskDtos, isLoading } = useQuery({
@@ -22,7 +21,7 @@ const TaskList = () => {
       />
     </>
   ));
-  const newTask = <NewTask key="new" />;
+  // const newTask = <NewTask key="new" />;
   return isLoading ? (
     <div>Loading...</div>
   ) : (
@@ -30,7 +29,7 @@ const TaskList = () => {
       <div className="flex flex-col gap-2 lg:w-[480px] w-[360px] self-center overflow-y-auto">
         {tasks}
       </div>
-      <div>{newTask}</div>
+      {/* <div>{newTask}</div> */}
     </div>
   );
 };

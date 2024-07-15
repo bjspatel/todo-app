@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useState, PropsWithChildren } from "react";
 
 import { api } from "../apis";
-import { LoginRequestDto } from "../apis/types";
+import { LoginRequestDto, UserDto } from "../apis/types";
 import AuthContext from "./AuthContext";
 import { TokenManager } from "./TokenManager";
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [userId, setUserId] = useState("");
+  const [user, setUser] = useState<UserDto | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const login = useCallback(async (requestDto: LoginRequestDto) => {
     try {
-      const { accessToken, userId } = await api.auth.login(requestDto);
+      const { accessToken, user } = await api.auth.login(requestDto);
       TokenManager.setAccessToken(accessToken);
-      setUserId(userId);
+      setUser(user);
       setIsAuthenticated(true);
     } catch (error) {
       TokenManager.setAccessToken("");
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       await api.auth.logout();
     } finally {
       TokenManager.setAccessToken("");
-      setUserId("");
+      setUser(null);
       setIsAuthenticated(false);
     }
   }, []);
@@ -38,13 +38,13 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       try {
         // load access-token on first render
         setIsLoading(true);
-        const { accessToken, userId } = await api.auth.refreshAccessToken();
+        const { accessToken, user } = await api.auth.refreshAccessToken();
         TokenManager.setAccessToken(accessToken);
-        setUserId(userId);
+        setUser(user);
         setIsAuthenticated(true);
       } catch {
         TokenManager.setAccessToken("");
-        setUserId("");
+        setUser(null);
         setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
@@ -55,7 +55,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   return isLoading ? (
     <div>Loading...</div>
   ) : (
-    <AuthContext.Provider value={{ login, logout, userId, isAuthenticated }}>
+    <AuthContext.Provider value={{ login, logout, user, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
