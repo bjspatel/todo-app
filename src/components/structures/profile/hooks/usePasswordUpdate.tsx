@@ -16,7 +16,7 @@ const passwordUpdateSchema = z
       z
         .string()
         .min(8, { message: "Password must be atlest 8 characters long" })
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, {
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
           message:
             "Password must be 8 characters long and contain at least one uppercase letter, one lowercase letter and one number",
         })
