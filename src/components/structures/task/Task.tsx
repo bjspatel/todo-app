@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 import { api } from "@/apis";
-import { CreateTaskRequestDto, TaskDto } from "@/apis/types";
+import { CreateTaskRequestDto, TaskDto, TaskProgressValue } from "@/apis/types";
 import { useMutation } from "@tanstack/react-query";
 
 import TaskActions from "./TaskActions";
 import TaskDate from "./TaskDate";
 import TaskDone from "./TaskDone";
-import { ProgressValue, TaskProgress } from "./TaskProgress";
+import { TaskProgress } from "./TaskProgress";
 
 type Props = {
   dto: TaskDto;
@@ -17,12 +17,11 @@ type Props = {
 const Task = (props: Props) => {
   const { dto } = props;
   const [taskName, setTaskName] = useState(dto.name);
+  const [showDatePicker, setShowDatePicker] = useState(!!dto.dueAt);
   const [isDone, setDone] = useState(false);
   const [selectedProgressValue, setSelectedProgressValue] =
-    useState<ProgressValue>("0");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+    useState<TaskProgressValue>(dto.progress);
+  const [dueDate, setDueDate] = useState<number | undefined>(dto.dueAt);
 
   const [isTyping, setIsTyping] = useState(false);
   const { mutate: updateTask } = useMutation({
@@ -31,6 +30,12 @@ const Task = (props: Props) => {
       return api.task.update(dto.id, body);
     },
   });
+
+  useEffect(() => {
+    if (!showDatePicker) {
+      setDueDate(undefined);
+    }
+  }, [showDatePicker]);
 
   // useEffect(() => {
   //   if (selectedStatusValue !== dto.status) {
@@ -88,13 +93,18 @@ const Task = (props: Props) => {
                 setSelectedProgressValue={setSelectedProgressValue}
               />
             )}
-            <TaskActions taskId={dto.id} />
+            <TaskActions
+              taskId={dto.id}
+              showDatePicker={showDatePicker}
+              setShowDatePicker={setShowDatePicker}
+            />
           </div>
         </div>
         <div className="flex justify-end text-sm">
           <TaskDate
-            date={selectedDate}
-            setDate={setSelectedDate}
+            show={showDatePicker}
+            dueAt={dueDate}
+            setDueAt={setDueDate}
           />
         </div>
       </div>

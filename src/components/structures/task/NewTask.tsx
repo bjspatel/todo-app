@@ -2,26 +2,27 @@ import { ArrowUpCircle, PlusCircle, XCircle } from "lucide-react";
 import { useState } from "react";
 
 import { api } from "@/apis";
-import { CreateTaskRequestDto } from "@/apis/types";
+import { CreateTaskRequestDto, TaskProgressValue } from "@/apis/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { StatusValue } from "./StatusDropdown";
-import { ProgressValue, TaskProgress } from "./TaskProgress";
+import TaskDate from "./TaskDate";
+import { TaskProgress } from "./TaskProgress";
 
 const NewTask = () => {
   const [isNew, setIsNew] = useState(false);
   const [name, setName] = useState("");
-  const [status] = useState<StatusValue>("to-do");
   const [selectedProgressValue, setSelectedProgressValue] =
-    useState<ProgressValue>("0");
+    useState<TaskProgressValue>(0);
+  const [dueAt, setDueAt] = useState<number | undefined>();
 
   const queryclient = useQueryClient();
   const { mutate: createTask } = useMutation({
     mutationKey: ["createTask"],
     mutationFn: () => {
       const createTaskRequest: CreateTaskRequestDto = {
-        name: name,
-        status: status,
+        name,
+        progress: selectedProgressValue,
+        dueAt,
       };
       return api.task.create(createTaskRequest);
     },
@@ -52,21 +53,27 @@ const NewTask = () => {
               setSelectedProgressValue={setSelectedProgressValue}
             />
           </div>
-          <div className="flex flex-row gap-2 justify-end">
-            <button
-              onClick={async () => {
-                await createTask();
-                queryclient.invalidateQueries({
-                  queryKey: ["tasks"],
-                });
-                setIsNew(false);
-              }}
-            >
-              <ArrowUpCircle className="w-6 h-6 stroke-primary" />
-            </button>
-            <button onClick={() => setIsNew(false)}>
-              <XCircle className="w-6 h-6 stroke-orange-600" />
-            </button>
+          <div className="w-full justify-between">
+            <TaskDate
+              dueAt={dueAt}
+              setDueAt={setDueAt}
+            />
+            <div className="flex flex-row gap-2 justify-end">
+              <button
+                onClick={async () => {
+                  await createTask();
+                  queryclient.invalidateQueries({
+                    queryKey: ["tasks"],
+                  });
+                  setIsNew(false);
+                }}
+              >
+                <ArrowUpCircle className="w-6 h-6 stroke-primary" />
+              </button>
+              <button onClick={() => setIsNew(false)}>
+                <XCircle className="w-6 h-6 stroke-orange-600" />
+              </button>
+            </div>
           </div>
         </div>
       )}

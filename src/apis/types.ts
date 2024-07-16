@@ -33,16 +33,21 @@ export type UserDto = {
   about?: string;
 };
 
-export type TaskStatus = "to-do" | "in-progress" | "done" | "canceled";
+export type TaskProgressValue = 0 | 25 | 50 | 75 | 100;
 
 export type CreateTaskRequestDto = {
   name: string;
-  status: TaskStatus;
+  progress: number;
+  dueAt?: number;
 };
 
 export type TaskDto = {
   id: string;
   name: string;
   userId: string;
-  status: TaskStatus;
+  isDone: boolean;
+  progress: TaskProgressValue;
+  dueAt: number;
+  createdAt: number;
+  updatedAt: number;
 };

@@ -1,19 +1,21 @@
 import { MoreHorizontal } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
+} from "@shadcn/dropdown-menu";
 
 type Props = {
   taskId: string;
+  showDatePicker: boolean;
+  setShowDatePicker: Dispatch<SetStateAction<boolean>>;
 };
 
 const TaskActions = (props: Props) => {
-  const { taskId } = props;
-  console.log("Task id: ", taskId);
+  const { taskId, showDatePicker, setShowDatePicker } = props;
   return (
     <div className="flex flex-col justify-center">
       <DropdownMenu>
@@ -26,10 +28,22 @@ const TaskActions = (props: Props) => {
         <DropdownMenuContent
           side="bottom"
           align="end"
-          className="w-[80px] min-w-4"
+          className="w-[124px] min-w-4"
         >
+          <DropdownMenuItem
+            onClick={() => {
+              setShowDatePicker(show => !show);
+            }}
+          >
+            {showDatePicker ? "Clear Due Date" : "Add Due Date"}
+          </DropdownMenuItem>
           <DropdownMenuItem>Archive</DropdownMenuItem>
-          <DropdownMenuItem className="text-orange-600">
+          <DropdownMenuItem
+            className="text-orange-600"
+            onClick={() => {
+              console.log("Delete task: ", taskId);
+            }}
+          >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

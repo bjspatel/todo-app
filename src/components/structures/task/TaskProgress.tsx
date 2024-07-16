@@ -10,6 +10,7 @@ import {
   SVGProps,
 } from "react";
 
+import { TaskProgressValue } from "@/apis/types";
 import ProgressHalfIcon from "@/assets/progress-half.svg?react";
 import ProgressQuarterSrc from "@/assets/progress-quarter.svg?react";
 import ProgressThreeQuarterSrc from "@/assets/progress-three-quarter.svg?react";
@@ -18,35 +19,33 @@ import { Button } from "@shadcn/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@shadcn/popover";
 import { ToggleGroup, ToggleGroupItem } from "@shadcn/toggle-group";
 
-export type ProgressValue = "0" | "0.25" | "0.5" | "0.75";
-
 type Progress = {
-  value: ProgressValue;
+  value: TaskProgressValue;
   icon: FunctionComponent<SVGProps<SVGSVGElement>>;
 };
 
 const progressList: Progress[] = [
   {
-    value: "0",
+    value: 0,
     icon: CircleDashed,
   },
   {
-    value: "0.25",
+    value: 25,
     icon: ProgressQuarterSrc,
   },
   {
-    value: "0.5",
+    value: 50,
     icon: ProgressHalfIcon,
   },
   {
-    value: "0.75",
+    value: 75,
     icon: ProgressThreeQuarterSrc,
   },
 ];
 
 type Props = {
-  selectedProgressValue: ProgressValue;
-  setSelectedProgressValue: Dispatch<SetStateAction<ProgressValue>>;
+  selectedProgressValue: TaskProgressValue;
+  setSelectedProgressValue: Dispatch<SetStateAction<TaskProgressValue>>;
 };
 
 export function TaskProgress(props: Props) {
@@ -81,13 +80,13 @@ export function TaskProgress(props: Props) {
       >
         <ToggleGroup
           type="single"
-          value={selectedProgressValue}
+          value={selectedProgressValue.toString()}
         >
           {progressList.map(progress => (
             <ToggleGroupItem
               key={progress.value}
               disabled={false}
-              value={progress.value}
+              value={progress.value.toString()}
               className="m-2"
               onClick={() => {
                 console.log("Selected toggle: ", progress.value);
