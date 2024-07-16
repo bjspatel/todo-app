@@ -8,6 +8,13 @@ export type UpdatePasswordRequestDto = {
   newPassword: string;
 };
 
+export type UpdateTaskRequestDto = {
+  name?: string;
+  isDone?: boolean;
+  progress?: number;
+  dueAt?: number;
+};
+
 export type AuthDto = {
   user: UserDto;
   accessToken: string;

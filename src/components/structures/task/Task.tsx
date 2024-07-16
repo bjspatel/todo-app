@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 import { api } from "@/apis";
-import { CreateTaskRequestDto, TaskDto, TaskProgressValue } from "@/apis/types";
-import { useMutation } from "@tanstack/react-query";
+import { TaskDto, TaskProgressValue, UpdateTaskRequestDto } from "@/apis/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import TaskActions from "./TaskActions";
 import TaskDate from "./TaskDate";
@@ -16,45 +16,36 @@ type Props = {
 
 const Task = (props: Props) => {
   const { dto } = props;
-  const [taskName, setTaskName] = useState(dto.name);
+  const [name, setName] = useState(dto.name);
+  const [isDone, setIsDone] = useState(dto.isDone);
+  const [progress, setProgress] = useState<TaskProgressValue>(dto.progress);
   const [showDatePicker, setShowDatePicker] = useState(!!dto.dueAt);
-  const [isDone, setDone] = useState(false);
-  const [selectedProgressValue, setSelectedProgressValue] =
-    useState<TaskProgressValue>(dto.progress);
-  const [dueDate, setDueDate] = useState<number | undefined>(dto.dueAt);
+  const [dueAt, setDueAt] = useState<number | undefined>(dto.dueAt);
+  const queryClient = useQueryClient();
 
   const [isTyping, setIsTyping] = useState(false);
   const { mutate: updateTask } = useMutation({
     mutationKey: ["updateTask"],
-    mutationFn: (body: Partial<CreateTaskRequestDto>) => {
-      return api.task.update(dto.id, body);
+    mutationFn: async (body: UpdateTaskRequestDto) => {
+      await api.task.update(dto.id, body);
+      queryClient.invalidateQueries({
+        queryKey: ["tasks-list"],
+      });
     },
   });
 
   useEffect(() => {
     if (!showDatePicker) {
-      setDueDate(undefined);
+      setDueAt(undefined);
     }
   }, [showDatePicker]);
-
-  // useEffect(() => {
-  //   if (selectedStatusValue !== dto.status) {
-  //     const updateTaskRequest: Partial<CreateTaskRequestDto> = {
-  //       status: selectedStatusValue,
-  //     };
-  //     updateTask(updateTaskRequest);
-  //   }
-  // }, [dto.status, selectedStatusValue, updateTask]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
       if (isTyping) {
         setIsTyping(false);
-        if (taskName !== dto.name) {
-          const updateTaskRequest: Partial<CreateTaskRequestDto> = {
-            name: taskName,
-          };
-          updateTask(updateTaskRequest);
+        if (name !== dto.name) {
+          updateTask({ name });
         }
       }
     }, 1000);
@@ -62,12 +53,31 @@ const Task = (props: Props) => {
     return () => {
       clearTimeout(handler);
     };
-  }, [taskName, isTyping, dto.name, updateTask]);
+  }, [name, isTyping, dto.name, updateTask]);
+
+  useEffect(() => {
+    if (isDone !== dto.isDone) {
+      setProgress(isDone ? 100 : 0);
+      updateTask({ isDone });
+    }
+  }, [isDone, dto.isDone, updateTask]);
+
+  useEffect(() => {
+    if (progress !== dto.progress) {
+      updateTask({ progress });
+    }
+  }, [progress, dto.progress, updateTask]);
+
+  useEffect(() => {
+    if (dueAt !== dto.dueAt) {
+      updateTask({ dueAt });
+    }
+  }, [dueAt, dto.dueAt, updateTask]);
 
   const handleTaskNameChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setTaskName(event.target.value);
+    setName(event.target.value);
     setIsTyping(true);
   };
 
@@ -75,22 +85,22 @@ const Task = (props: Props) => {
     <div className="flex flex-row gap-4 justify-between h-fit p-4 ">
       <TaskDone
         isDone={isDone}
-        setDone={setDone}
+        setDone={setIsDone}
       />
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
           <TextareaAutosize
             rows={1}
             maxRows={5}
-            className="w-[75%] resize-none bg-transparent"
-            value={taskName}
+            className="w-[75%] p-2 resize-none bg-transparent"
+            value={name}
             onChange={handleTaskNameChange}
           />
           <div className="flex">
             {!isDone && (
               <TaskProgress
-                selectedProgressValue={selectedProgressValue}
-                setSelectedProgressValue={setSelectedProgressValue}
+                selectedProgress={progress}
+                setSelectedProgress={setProgress}
               />
             )}
             <TaskActions
@@ -100,13 +110,14 @@ const Task = (props: Props) => {
             />
           </div>
         </div>
-        <div className="flex justify-end text-sm">
-          <TaskDate
-            show={showDatePicker}
-            dueAt={dueDate}
-            setDueAt={setDueDate}
-          />
-        </div>
+        {!isDone && (showDatePicker || dueAt) && (
+          <div className="flex justify-end text-sm">
+            <TaskDate
+              dueAt={dueAt}
+              setDueAt={setDueAt}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

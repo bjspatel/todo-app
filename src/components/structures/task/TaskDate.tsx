@@ -14,9 +14,9 @@ type Props = {
 };
 
 const TaskDate = (props: Props) => {
-  const { show, dueAt, setDueAt } = props;
+  const { dueAt, setDueAt } = props;
   const [isOpen, setOpen] = useState(false);
-  return show || dueAt ? (
+  return (
     <Popover
       open={isOpen}
       onOpenChange={setOpen}
@@ -42,8 +42,6 @@ const TaskDate = (props: Props) => {
         />
       </PopoverContent>
     </Popover>
-  ) : (
-    <></>
   );
 };
 

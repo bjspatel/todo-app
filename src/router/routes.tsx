@@ -1,8 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { Tasks, Login, NotFound, Register } from "../pages";
-import PrivateRoute from "./PrivateRoute";
+import { ComingSoon } from "@/pages/ComingSoon";
 import Profile from "@/pages/Profile";
+
+import { Login, NotFound, Register, Tasks } from "../pages";
+import PrivateRoute from "./PrivateRoute";
+import Logout from "@/pages/Logout";
 
 export const router = createBrowserRouter([
   {
@@ -22,8 +25,16 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: "calendar",
+    element: <ComingSoon />,
+  },
+  {
     path: "login",
     element: <Login />,
+  },
+  {
+    path: "logout",
+    element: <Logout />,
   },
   {
     path: "register",

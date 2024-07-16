@@ -29,4 +29,12 @@ const update = async (
   }
 };
 
-export const task = { create, list, update };
+const deleteTask = async (id: string) => {
+  try {
+    await axiosInstance.delete(`/tasks/${id}`);
+  } catch (error) {
+    throw new Error("Failed to delete a task");
+  }
+};
+
+export const task = { create, list, update, delete: deleteTask };

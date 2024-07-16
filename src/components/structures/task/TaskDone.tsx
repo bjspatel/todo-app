@@ -9,7 +9,7 @@ type Props = {
 const TaskDone = (props: Props) => {
   const { isDone, setDone } = props;
   return (
-    <div className="flex">
+    <div className="flex pt-2">
       <button
         className="self-start"
         onClick={() => setDone(isDone => !isDone)}

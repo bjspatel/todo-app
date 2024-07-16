@@ -24,7 +24,7 @@ type Progress = {
   icon: FunctionComponent<SVGProps<SVGSVGElement>>;
 };
 
-const progressList: Progress[] = [
+const progressSpecList: Progress[] = [
   {
     value: 0,
     icon: CircleDashed,
@@ -44,19 +44,20 @@ const progressList: Progress[] = [
 ];
 
 type Props = {
-  selectedProgressValue: TaskProgressValue;
-  setSelectedProgressValue: Dispatch<SetStateAction<TaskProgressValue>>;
+  selectedProgress: TaskProgressValue;
+  setSelectedProgress: Dispatch<SetStateAction<TaskProgressValue>>;
 };
 
 export function TaskProgress(props: Props) {
-  const { selectedProgressValue, setSelectedProgressValue } = props;
+  const { selectedProgress, setSelectedProgress } = props;
   const [open, setOpen] = useState(false);
-  const selectedProgress = useMemo(() => {
+  const selectedProgressSpec = useMemo(() => {
     return (
-      progressList.find(progress => progress.value === selectedProgressValue) ||
-      progressList[0]
+      progressSpecList.find(spec => spec.value === selectedProgress) ||
+      progressSpecList[0]
     );
-  }, [selectedProgressValue]);
+  }, [selectedProgress]);
+
   return (
     <Popover
       open={open}
@@ -68,8 +69,8 @@ export function TaskProgress(props: Props) {
           size="sm"
           className="w-[50px] justify-start self-center h-4"
         >
-          {selectedProgress && (
-            <selectedProgress.icon className="h-4 w-4 fill-current" />
+          {selectedProgressSpec && (
+            <selectedProgressSpec.icon className="h-4 w-4 fill-current" />
           )}
         </Button>
       </PopoverTrigger>
@@ -80,9 +81,9 @@ export function TaskProgress(props: Props) {
       >
         <ToggleGroup
           type="single"
-          value={selectedProgressValue.toString()}
+          value={selectedProgress.toString()}
         >
-          {progressList.map(progress => (
+          {progressSpecList.map(progress => (
             <ToggleGroupItem
               key={progress.value}
               disabled={false}
@@ -90,14 +91,14 @@ export function TaskProgress(props: Props) {
               className="m-2"
               onClick={() => {
                 console.log("Selected toggle: ", progress.value);
-                setSelectedProgressValue(progress.value);
+                setSelectedProgress(progress.value);
                 setOpen(false);
               }}
             >
               <progress.icon
                 className={cn(
                   "h-4 w-4 fill-current",
-                  progress.value === selectedProgress?.value
+                  progress.value === selectedProgressSpec?.value
                     ? "border-2"
                     : "border-0"
                 )}

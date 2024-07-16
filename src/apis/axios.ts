@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 });
 
 async function refreshToken() {
-  const { data } = await axios.get("/auth/refresh-token");
+  const { data } = await axiosInstance.get("/auth/refresh-token");
   return data.accessToken;
 }
 
@@ -18,13 +18,12 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log("Config in req: ", config);
     return config;
   },
   error => Promise.reject(error)
 );
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config;

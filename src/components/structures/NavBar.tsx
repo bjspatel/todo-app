@@ -1,6 +1,6 @@
 import "react-initials-avatar/lib/ReactInitialsAvatar.css";
 
-import { ListTodo, LogOut, LucideCalendarDays } from "lucide-react";
+import { ListTodo, LucideCalendarDays, PowerIcon } from "lucide-react";
 import InitialsAvatar from "react-initials-avatar";
 import { useLocation, Link } from "react-router-dom";
 
@@ -32,7 +32,7 @@ const bottomNavItems = [
     to: "/profile",
   },
   {
-    icon: LogOut,
+    icon: PowerIcon,
     label: "Logout",
     to: "/logout",
   },

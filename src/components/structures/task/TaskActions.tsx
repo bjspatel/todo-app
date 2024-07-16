@@ -1,12 +1,14 @@
-import { MoreHorizontal } from "lucide-react";
+import { Loader2, MoreHorizontal } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
+import { api } from "@/apis";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@shadcn/dropdown-menu";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   taskId: string;
@@ -16,6 +18,17 @@ type Props = {
 
 const TaskActions = (props: Props) => {
   const { taskId, showDatePicker, setShowDatePicker } = props;
+  const queryClient = useQueryClient();
+  const { mutate: deleteTask, isPending: isDeleting } = useMutation({
+    mutationKey: ["delete-task"],
+    mutationFn: async () => {
+      console.log("Delete task: ", taskId);
+      await api.task.delete(taskId);
+      queryClient.invalidateQueries({
+        queryKey: ["tasks-list"],
+      });
+    },
+  });
   return (
     <div className="flex flex-col justify-center">
       <DropdownMenu>
@@ -40,11 +53,12 @@ const TaskActions = (props: Props) => {
           <DropdownMenuItem>Archive</DropdownMenuItem>
           <DropdownMenuItem
             className="text-orange-600"
+            disabled={isDeleting}
             onClick={() => {
-              console.log("Delete task: ", taskId);
+              deleteTask();
             }}
           >
-            Delete
+            Delete {isDeleting && <Loader2 className="animate-spin h-4 w-4" />}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
