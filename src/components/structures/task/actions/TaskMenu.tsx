@@ -16,7 +16,7 @@ type Props = {
   setShowDatePicker: Dispatch<SetStateAction<boolean>>;
 };
 
-const TaskActions = (props: Props) => {
+const TaskMenu = (props: Props) => {
   const { taskId, showDatePicker, setShowDatePicker } = props;
   const queryClient = useQueryClient();
   const { mutate: deleteTask, isPending: isDeleting } = useMutation({
@@ -66,4 +66,4 @@ const TaskActions = (props: Props) => {
   );
 };
 
-export default TaskActions;
+export default TaskMenu;

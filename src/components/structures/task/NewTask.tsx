@@ -5,8 +5,8 @@ import { api } from "@/apis";
 import { CreateTaskRequestDto, TaskProgressValue } from "@/apis/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import TaskDate from "./TaskDate";
-import { TaskProgress } from "./TaskProgress";
+import TaskDate from "./actions/TaskDate";
+import { TaskProgress } from "./actions/TaskProgress";
 
 const NewTask = () => {
   const [isNew, setIsNew] = useState(false);

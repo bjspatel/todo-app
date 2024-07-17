@@ -1,47 +1,13 @@
 "use client";
 
-import { CircleDashed } from "lucide-react";
-import {
-  useMemo,
-  useState,
-  Dispatch,
-  FunctionComponent,
-  SetStateAction,
-  SVGProps,
-} from "react";
+import { useMemo, useState, Dispatch, SetStateAction } from "react";
 
 import { TaskProgressValue } from "@/apis/types";
-import ProgressHalfIcon from "@/assets/progress-half.svg?react";
-import ProgressQuarterSrc from "@/assets/progress-quarter.svg?react";
-import ProgressThreeQuarterSrc from "@/assets/progress-three-quarter.svg?react";
 import { cn } from "@/lib/utils";
 import { Button } from "@shadcn/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@shadcn/popover";
 import { ToggleGroup, ToggleGroupItem } from "@shadcn/toggle-group";
-
-type Progress = {
-  value: TaskProgressValue;
-  icon: FunctionComponent<SVGProps<SVGSVGElement>>;
-};
-
-const progressSpecList: Progress[] = [
-  {
-    value: 0,
-    icon: CircleDashed,
-  },
-  {
-    value: 25,
-    icon: ProgressQuarterSrc,
-  },
-  {
-    value: 50,
-    icon: ProgressHalfIcon,
-  },
-  {
-    value: 75,
-    icon: ProgressThreeQuarterSrc,
-  },
-];
+import { TaskProgressSpecList } from "./TaskProgressSpecList";
 
 type Props = {
   selectedProgress: TaskProgressValue;
@@ -53,8 +19,8 @@ export function TaskProgress(props: Props) {
   const [open, setOpen] = useState(false);
   const selectedProgressSpec = useMemo(() => {
     return (
-      progressSpecList.find(spec => spec.value === selectedProgress) ||
-      progressSpecList[0]
+      TaskProgressSpecList.find(spec => spec.value === selectedProgress) ||
+      TaskProgressSpecList[0]
     );
   }, [selectedProgress]);
 
@@ -70,7 +36,7 @@ export function TaskProgress(props: Props) {
           className="w-[50px] justify-start self-center h-4"
         >
           {selectedProgressSpec && (
-            <selectedProgressSpec.icon className="h-4 w-4 fill-current" />
+            <selectedProgressSpec.icon className="h-4 w-4 fill-current stroke-current" />
           )}
         </Button>
       </PopoverTrigger>
@@ -83,7 +49,7 @@ export function TaskProgress(props: Props) {
           type="single"
           value={selectedProgress.toString()}
         >
-          {progressSpecList.map(progress => (
+          {TaskProgressSpecList.map(progress => (
             <ToggleGroupItem
               key={progress.value}
               disabled={false}
@@ -97,7 +63,7 @@ export function TaskProgress(props: Props) {
             >
               <progress.icon
                 className={cn(
-                  "h-4 w-4 fill-current",
+                  "h-4 w-4 fill-current stroke-current",
                   progress.value === selectedProgressSpec?.value
                     ? "border-2"
                     : "border-0"

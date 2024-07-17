@@ -1,18 +1,31 @@
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 
 import { api } from "@/apis";
 import { useQuery } from "@tanstack/react-query";
 
 import { Separator } from "../../ui/separator";
+import FilterDialog from "./filter/FilterDialog";
+import { useFilter } from "./filter/hooks/useFilter";
 import Task from "./Task";
-import Filter from "./Filter";
+import FilterChips from "./filter/FilterChips";
 
 const TaskList = () => {
   const { data: taskDtos, isLoading } = useQuery({
     queryKey: ["tasks-list"],
     queryFn: api.task.list,
   });
-  const tasks = taskDtos?.map(taskDto => (
+  const { taskListState, updateTaskListState } = useFilter(taskDtos || []);
+  useEffect(() => {
+    updateTaskListState({
+      type: "set_task_list",
+      payload: {
+        taskList: taskDtos,
+      },
+    });
+  }, [taskDtos, updateTaskListState]);
+
+  const tasks = taskListState.filteredTaskList.map(taskDto => (
     <>
       <Task
         key={taskDto.id}
@@ -32,9 +45,16 @@ const TaskList = () => {
     <>
       <div
         key="header-line"
-        className="fixed t-0 lg:w-[480px] w-full bg-slate-500 shadow-lg"
+        className="fixed flex t-0 lg:w-[480px] w-full bg-slate-500 shadow-lg"
       >
-        <Filter />
+        <FilterDialog
+          taskListState={taskListState}
+          updateTaskListState={updateTaskListState}
+        />
+        <FilterChips
+          taskListState={taskListState}
+          updateTaskListState={updateTaskListState}
+        />
       </div>
       <div className="flex flex-col gap-2 mt-8 w-full overflow-y-auto">
         {tasks}

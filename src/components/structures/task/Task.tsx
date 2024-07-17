@@ -5,10 +5,10 @@ import { api } from "@/apis";
 import { TaskDto, TaskProgressValue, UpdateTaskRequestDto } from "@/apis/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import TaskActions from "./TaskActions";
-import TaskDate from "./TaskDate";
-import TaskDone from "./TaskDone";
-import { TaskProgress } from "./TaskProgress";
+import TaskMenu from "./actions/TaskMenu";
+import TaskDate from "./actions/TaskDate";
+import TaskDone from "./actions/TaskDone";
+import { TaskProgress } from "./actions/TaskProgress";
 
 type Props = {
   dto: TaskDto;
@@ -103,7 +103,7 @@ const Task = (props: Props) => {
                 setSelectedProgress={setProgress}
               />
             )}
-            <TaskActions
+            <TaskMenu
               taskId={dto.id}
               showDatePicker={showDatePicker}
               setShowDatePicker={setShowDatePicker}
