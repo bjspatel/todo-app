@@ -28,7 +28,7 @@ This is the frontend of the ToDo application built using **React**, **TypeScript
 
 2. Clone the repository:
     ```sh
-    git clone https://github.com/bjspatel/todo-frontend.git
+    git clone https://github.com/bjspatel/todo-app.git
     cd todo-frontend
     ```
 
