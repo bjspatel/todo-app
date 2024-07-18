@@ -1,6 +1,6 @@
 # ToDo Application Frontend
 
-This is the frontend of the ToDo application built using **React**, **TypeScript**, **Vite**, **Shadcn**, and **TailwindCSS**. The application provides a user-friendly interface for managing tasks, with features including task creation, updates, and deletions.
+This is the frontend of the ToDo application built using **React**, **TypeScript**, **Vite**, **Shadcn**, and **TailwindCSS**. The application provides a user-friendly interface for managing tasks.
 
 ## Table of Contents
 
@@ -10,27 +10,29 @@ This is the frontend of the ToDo application built using **React**, **TypeScript
   - [Installation](#installation)
   - [Running the Application](#running-the-application)
   - [Screenshots](#screenshots)
-  - [License](#license)
 
 ## Features
 
 - **Task Management**: Create, update, and delete tasks with ease.
+- **Task Operations**: Mark Complete, Set Due Date, Set Progress
 - **Authentication**: Secure login and registration system.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 - **User Profile**: Manage user information and settings.
-- **Filters and Sorting**: Easily filter and sort tasks to stay organized.
+- **Filters**: Easily filter tasks to stay organized.
 - **Real-time Updates**: Automatically updates the task list in real-time.
-- **API Integration**: Communicates with the backend API for data persistence.
 
 ## Installation
 
-1. Clone the repository:
+1. Install and Run the API server of the application by cloning and following steps on this repo
+    ### [Clone and Run the API](https://github.com/bjspatel/todo-api)
+
+2. Clone the repository:
     ```sh
     git clone https://github.com/bjspatel/todo-frontend.git
     cd todo-frontend
     ```
 
-2. Install the dependencies:
+3. Install the dependencies:
     ```sh
     npm install
     ```
@@ -52,7 +54,3 @@ This is the frontend of the ToDo application built using **React**, **TypeScript
 ## Screenshots
 
 ![ToDo App Interface](./docs/todo-screenshot.png)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
