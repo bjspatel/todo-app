@@ -9,7 +9,7 @@ const HeaderSection = () => {
       <div className="flex items-center space-x-4">
         <InitialsAvatar
           name={user?.name || "User"}
-          className={"h-24 w-24 text-4xl initials-avatar"}
+          className={"h-24 w-24 text-4xl bg-slate-500 initials-avatar"}
         />
         <div className="space-y-1.5">
           <h1 className="text-2xl font-bold">{user?.name}</h1>

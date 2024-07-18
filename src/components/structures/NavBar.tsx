@@ -85,7 +85,7 @@ export function NavBar() {
                   {to === "/profile" ? (
                     <Icon
                       name={auth.user?.name || "User"}
-                      className="h-5 w-5 text-sm initials-avatar"
+                      className="h-8 w-8 text-sm bg-slate-500 initials-avatar"
                     />
                   ) : (
                     <Icon

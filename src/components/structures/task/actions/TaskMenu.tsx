@@ -50,7 +50,6 @@ const TaskMenu = (props: Props) => {
           >
             {showDatePicker ? "Clear Due Date" : "Add Due Date"}
           </DropdownMenuItem>
-          <DropdownMenuItem>Archive</DropdownMenuItem>
           <DropdownMenuItem
             className="text-orange-600"
             disabled={isDeleting}

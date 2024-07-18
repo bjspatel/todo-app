@@ -1,9 +1,10 @@
 import axios from "axios";
+import apiUrl from "@/config";
 
 import { TokenManager } from "../contexts/TokenManager";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: apiUrl,
   withCredentials: true,
 });
 

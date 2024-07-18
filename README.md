@@ -1,30 +1,58 @@
-# React + TypeScript + Vite
+# ToDo Application Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend of the ToDo application built using **React**, **TypeScript**, **Vite**, **Shadcn**, and **TailwindCSS**. The application provides a user-friendly interface for managing tasks, with features including task creation, updates, and deletions.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [ToDo Application Frontend](#todo-application-frontend)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+  - [Screenshots](#screenshots)
+  - [License](#license)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Task Management**: Create, update, and delete tasks with ease.
+- **Authentication**: Secure login and registration system.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **User Profile**: Manage user information and settings.
+- **Filters and Sorting**: Easily filter and sort tasks to stay organized.
+- **Real-time Updates**: Automatically updates the task list in real-time.
+- **API Integration**: Communicates with the backend API for data persistence.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/bjspatel/todo-frontend.git
+    cd todo-frontend
+    ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Install the dependencies:
+    ```sh
+    npm install
+    ```
+
+## Running the Application
+
+1. Create a `.env` file in the root directory of the project and add the following environment variables:
+    ```env
+    VITE_API_URL=http://localhost:8080
+    ```
+
+2. Start the application:
+    ```sh
+    npm run dev
+    ```
+
+3. The application will be running on `http://localhost:5173`.
+
+## Screenshots
+
+![ToDo App Interface](./docs/todo-screenshot.png)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
